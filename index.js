@@ -1,35 +1,26 @@
 "use strict";
- 
-const input = prompt("Введіть ціле число:");
 
-function isPrime(num) {
-    if (num <= 1) return false; // Числа ≤ 1 не є простими
-    for (let i = 2; i <= Math.sqrt(num); i++) {
-        if (num % i === 0) return false;
-    }
-    return true;
-}
+let userInput = prompt("Enter an integer:").trim();
 
-function validateInput(input) {
-    // Перевірка на null, порожні рядки або невірний формат
-    if (input === null || input.trim() === '' || !/^-?\d+$/.test(input.trim())) {
-        return { valid: false, message: "Помилка: введено некоректні дані." };
-    }
+if (userInput === null || userInput === "" || isNaN(userInput) || !Number.isInteger(Number(userInput))) {
+    console.log("Error: Invalid value entered.");
+} else {
+    let userNumber = Number(userInput);
 
-    const number = parseInt(input.trim(), 10);
-
-    // Числа менше або дорівнюють 1 не є простими
-    if (number <= 1) {
-        return { valid: false, message: "Число не є простим." };
-    }
-
-    // Перевірка, чи є число простим
-    if (isPrime(number)) {
-        return { valid: true, message: "Число є простим." };
+    if (userNumber <= 1) {
+        console.log("The number is not prime. 1");
     } else {
-        return { valid: false, message: "Число не є простим." };
+        let isPrime = true;
+        for (let i = 2; i <= Math.sqrt(userNumber); i++) {
+            if (userNumber % i === 0) { 
+                isPrime = false;
+                break;
+            }
+        }
+        if (isPrime) {
+            console.log("The number is prime.");
+        } else {
+            console.log("The number is not prime.");
+        }
     }
 }
-
-const result = validateInput(input);
-alert(result.message);
