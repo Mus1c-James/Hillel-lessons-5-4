@@ -1,29 +1,35 @@
 "use strict";
  
-// const inputNumber = prompt('Please enter an integer N');
-let inputNumber = prompt('Please enter an integer N');
+const input = prompt("Введіть ціле число:");
 
-inputNumber = inputNumber.trim();
-// console.log('userInput', inputNumber)  
- 
-
-if(inputNumber ==='' || isNaN(inputNumber) || inputNumber === '.' || inputNumber === ' ' || !Number.isInteger(+inputNumber)){
-    console.log('Error incorected number')
-}else{
-    let numN  = parseInt(inputNumber);
-    console.log('parsetIn', numN);
-    if(isNaN(numN)){
-        console.log('err', numN)
-    }else{
-       console.log('else', numN) 
-       for (let count = 1; count <= 100; count++ ){
-            if(count * count <= numN){
-                console.log(count)
-            }else{
-                break;
-            }
-       
-        }
+function isPrime(num) {
+    if (num <= 1) return false; // Числа ≤ 1 не є простими
+    for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) return false;
     }
-    
+    return true;
 }
+
+function validateInput(input) {
+    // Перевірка на null, порожні рядки або невірний формат
+    if (input === null || input.trim() === '' || !/^-?\d+$/.test(input.trim())) {
+        return { valid: false, message: "Помилка: введено некоректні дані." };
+    }
+
+    const number = parseInt(input.trim(), 10);
+
+    // Числа менше або дорівнюють 1 не є простими
+    if (number <= 1) {
+        return { valid: false, message: "Число не є простим." };
+    }
+
+    // Перевірка, чи є число простим
+    if (isPrime(number)) {
+        return { valid: true, message: "Число є простим." };
+    } else {
+        return { valid: false, message: "Число не є простим." };
+    }
+}
+
+const result = validateInput(input);
+alert(result.message);
